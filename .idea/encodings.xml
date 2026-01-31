@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/customers/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/customers/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/inventory/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/inventory/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/machines/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/machines/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/notification/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/notification/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/orders/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/orders/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/planning/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/planning/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/production/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/production/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/products/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/products/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/quality_control/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/quality_control/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$APPLICATION_HOME_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$APPLICATION_HOME_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

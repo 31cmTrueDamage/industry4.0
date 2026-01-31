@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: production-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: production}
+  template:
+    metadata:
+      labels: {app: production}
+    spec:
+      containers:
+        - name: production-container
+          image: production-service:v1
+          imagePullPolicy: Never
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres-service:5432/production"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "estg"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "estg"
+            - name: RABBIT_HOST
+              value: "rabbitmq-service"
+            - name: SPRING_RABBITMQ_USERNAME
+              value: "guest"
+            - name: SPRING_RABBITMQ_PASSWORD
+              value: "guest"
+            - name: MACHINES_URL
+              value: "http://machines"
+          livenessProbe:
+            httpGet: {path: /actuator/health/liveness, port: 8080}
+            initialDelaySeconds: 60
+          readinessProbe:
+            httpGet: {path: /actuator/health/readiness, port: 8080}
+            initialDelaySeconds: 60

@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init
+data:
+  init.sql: |
+    CREATE DATABASE customers; CREATE DATABASE inventory;
+    CREATE DATABASE machines; CREATE DATABASE notifications;
+    CREATE DATABASE orders; CREATE DATABASE planning;
+    CREATE DATABASE production; CREATE DATABASE products;
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  ports:
+    - name: postgres
+      port: 5432
+  selector:
+    app: postgres
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16.0
+          env:
+            - name: POSTGRES_USER
+              value: "estg"
+            - name: POSTGRES_PASSWORD
+              value: "estg"
+          volumeMounts:
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d
+            - name: data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: init-script
+          configMap:
+            name: postgres-init
+        - name: data
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-service
+spec:
+  selector:
+    app: rabbitmq
+  ports:
+    - name: rabbitmq-app
+      protocol: TCP
+      port: 5672
+      targetPort: 5672
+    - name: rabbitmq-management
+      protocol: TCP
+      port: 15672
+      targetPort: 15672

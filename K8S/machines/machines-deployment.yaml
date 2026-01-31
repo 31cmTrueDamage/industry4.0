@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: machines-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: machines
+  template:
+    metadata:
+      labels:
+        app: machines
+    spec:
+      containers:
+        - name: machines-container
+          image: machines-service:v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            # Database Configuration
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres-service:5432/machines"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "estg"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "estg"
+
+            # RabbitMQ Configuration
+            - name: RABBIT_HOST
+              value: "rabbitmq-service"
+            - name: SPRING_RABBITMQ_USERNAME
+              value: "guest"
+            - name: SPRING_RABBITMQ_PASSWORD
+              value: "guest"
+
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 60

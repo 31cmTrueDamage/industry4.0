@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory
+  template:
+    metadata:
+      labels:
+        app: inventory
+    spec:
+      containers:
+        - name: inventory-container
+          image: inventory-service:v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres-service:5432/inventory"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "estg"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "estg"
+            - name: RABBIT_HOST
+              value: "rabbitmq-service"
+            - name: SPRING_RABBITMQ_USERNAME
+              value: "guest"
+            - name: SPRING_RABBITMQ_PASSWORD
+              value: "guest"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 60
