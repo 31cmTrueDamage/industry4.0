@@ -4,8 +4,8 @@ metadata:
   name: notification
 spec:
   selector:
-    app: notification
+    app: notifications
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080
+      targetPort: 8098

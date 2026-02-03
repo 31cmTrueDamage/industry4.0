@@ -5,31 +5,36 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels: {app: products}
+    matchLabels:
+      app: products
   template:
     metadata:
-      labels: {app: products}
+      labels:
+        app: products
     spec:
       containers:
         - name: products-container
           image: products-service:v1
           imagePullPolicy: Never
+          ports:
+            - containerPort: 8092
+
           env:
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://postgres-service:5432/products"
-            - name: SPRING_DATASOURCE_USERNAME
+            - name: DB_HOST
+              value: "postgres-service"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: "products"
+            - name: DB_USER
               value: "estg"
-            - name: SPRING_DATASOURCE_PASSWORD
+            - name: DB_PASSWORD
               value: "estg"
             - name: RABBIT_HOST
               value: "rabbitmq-service"
-            - name: SPRING_RABBITMQ_USERNAME
+            - name: RABBIT_PORT
+              value: "5672"
+            - name: RABBIT_USER
               value: "guest"
-            - name: SPRING_RABBITMQ_PASSWORD
+            - name: RABBIT_PASSWORD
               value: "guest"
-          livenessProbe:
-            httpGet: {path: /actuator/health/liveness, port: 8080}
-            initialDelaySeconds: 60
-          readinessProbe:
-            httpGet: {path: /actuator/health/readiness, port: 8080}
-            initialDelaySeconds: 60

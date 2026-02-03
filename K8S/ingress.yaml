@@ -1,0 +1,65 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: industry-ingress
+spec:
+  rules:
+    - host: industry40.local
+      http:
+        paths:
+          - path: /customers
+            pathType: Prefix
+            backend:
+              service:
+                name: customers
+                port:
+                  number: 8080
+          - path: /inventory
+            pathType: Prefix
+            backend:
+              service:
+                name: inventory
+                port:
+                  number: 8093
+          - path: /orders
+            pathType: Prefix
+            backend:
+              service:
+                name: orders
+                port:
+                  number: 8094
+          - path: /planning
+            pathType: Prefix
+            backend:
+              service:
+                name: planning
+                port:
+                  number: 8095
+          - path: /products
+            pathType: Prefix
+            backend:
+              service:
+                name: products
+                port:
+                  number: 8092
+          - path: /machines
+            pathType: Prefix
+            backend:
+              service:
+                name: machines
+                port:
+                  number: 8097
+          - path: /production
+            pathType: Prefix
+            backend:
+              service:
+                name: production
+                port:
+                  number: 8096
+          - path: /notifications
+            pathType: Prefix
+            backend:
+              service:
+                name: notification
+                port:
+                  number: 8098
